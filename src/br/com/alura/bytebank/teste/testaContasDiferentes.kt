@@ -1,5 +1,6 @@
 package br.com.alura.bytebank.teste
 
+import br.com.alura.bytebank.exception.SaldoInsulficienteException
 import br.com.alura.bytebank.modelo.Cliente
 import br.com.alura.bytebank.modelo.ContaCorrente
 import br.com.alura.bytebank.modelo.ContaPoupanca
@@ -52,4 +53,14 @@ fun testaContasDiferentes() {
 
     println("saldo poupança após transferir para corrente: ${contaPoupanca.saldo}")
     println("saldo corrente após receber transferência: ${contaCorrente.saldo}")
+
+    val contaTeste = ContaCorrente(Cliente("Lucas","47558266831",Endereco(),4444),124)
+  try {
+    contaTeste.deposita(50.0)
+    contaTeste.transfere(100.0,contaCorrente)
+  }  catch (e:SaldoInsulficienteException){
+      e.printStackTrace()
+      println("Saldo insulficiente para completar transferencia")
+
+  }
 }
